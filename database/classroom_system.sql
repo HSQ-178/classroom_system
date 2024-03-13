@@ -17,6 +17,11 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+DROP Database IF EXISTS `classroom_system`;
+CREATE Database IF NOT EXISTS `classroom_system` DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+
+USE `classroom_system`;
+
 -- ----------------------------
 -- Table structure for classes
 -- ----------------------------
@@ -289,6 +294,7 @@ DROP TABLE IF EXISTS `teachers`;
 CREATE TABLE `teachers`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `teacher_card` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -297,6 +303,6 @@ CREATE TABLE `teachers`  (
 -- ----------------------------
 -- Records of teachers
 -- ----------------------------
-INSERT INTO `teachers` VALUES (1, 'gdxz003', '黄爽清', NULL);
+INSERT INTO `teachers` VALUES (1, 'gdxz003', "12345", '黄爽清', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

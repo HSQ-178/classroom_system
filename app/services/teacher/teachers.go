@@ -4,6 +4,7 @@ import (
 	"classroom-system/app/models"
 	"classroom-system/database"
 	"errors"
+
 	"gorm.io/gorm"
 )
 
@@ -12,7 +13,12 @@ func TeacherRegister(t *models.TeachersRegisterReq) error {
 
 	//判断老师编号是否存在
 	var tempTeacherCard models.Teachers
-	err := database.GetMysql().Table("teachers").Where("teacher_card = ?", t.TeacherCard).First(tempTeacherCard).Error
+	err := database.GetMysql().
+		Table("teachers").
+		Where("teacher_card = ?", t.TeacherCard).
+		First(&tempTeacherCard).
+		Error
+
 	if !errors.Is(err, gorm.ErrRecordNotFound) {
 		return errors.New("该老师编号已存在")
 	}
