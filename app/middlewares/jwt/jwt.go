@@ -22,12 +22,12 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 				code = 2002 //token不合法
 			} else {
 				id := claims.Id
-				name := claims.Name
+				teacherCard := claims.TeacherCard
 				password := claims.Password
 
 				// 将当前请求的user信息保存到请求的上下文c上
 				c.Set("id", id)
-				c.Set("name", name)
+				c.Set("name", teacherCard)
 				c.Set("password", password)
 			}
 		}

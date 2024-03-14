@@ -8,7 +8,7 @@ type Result struct {
 
 var result Result
 
-// 默认success的成功返回
+// Success 的成功返回
 func Success(data interface{}) Result {
 	result.Code = 200
 	result.Msg = "success"
@@ -16,7 +16,7 @@ func Success(data interface{}) Result {
 	return result
 }
 
-// 默认success的成功返回
+// Fail 失败
 func Fail(msg string) Result {
 	result.Code = 400
 	result.Msg = msg

@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Register 注册
 func Register(c *gin.Context) {
 	var registerReq models.TeachersRegisterReq //存储用户注册请求中的数据
 
@@ -23,4 +24,25 @@ func Register(c *gin.Context) {
 	}
 
 	c.JSON(200, Result.Success("注册成功"))
+}
+
+// Login 登录
+func Login(c *gin.Context) {
+	var loginReq models.TeachersLoginReq
+
+	//参数校验
+	err := c.ShouldBindJSON(&loginReq)
+	if err != nil {
+		c.JSON(200, Result.Fail("参数错误"))
+		return
+	}
+
+	//登录
+	teacherInfo, err := teacherService.TeacherLogin(&loginReq)
+	if err != nil {
+		c.JSON(200, Result.Fail(err.Error()))
+		return
+	}
+
+	c.JSON(200, Result.Success(teacherInfo))
 }
