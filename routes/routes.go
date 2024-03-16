@@ -24,6 +24,12 @@ func InitRouter() *gin.Engine {
 			teacher.POST("/register", controllers.Register) //老师注册
 			teacher.POST("/login", controllers.Login)       //老师登录
 		}
+
+		//学生
+		student := root.Group("/student")
+		{
+			student.POST("/getAllStudents", controllers.GetAllStudents) //获取该老师所有学生
+		}
 	}
 
 	return r

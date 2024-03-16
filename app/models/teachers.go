@@ -3,7 +3,7 @@ package models
 // Teachers 老师模型
 type Teachers struct {
 	Id          int64  `json:"id" gorm:"primaryKey;autoIncrement"`
-	TeacherCard string `json:"teacherCard"`
+	TeacherCard string `form:"teacherCard" json:"teacherCard"`
 	Name        string `json:"name"`
 	Phone       string `json:"phone" gorm:"default: null"`
 	Password    string `json:"password"`
