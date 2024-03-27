@@ -11,6 +11,12 @@ import (
 )
 
 func check(t *models.TeachersRegisterReq) error {
+	if t.College == "" {
+		return errors.New("学院不能为空")
+	}
+	if t.Major == "" {
+		return errors.New("专业不能为空")
+	}
 
 	if t.TeacherCard == "" {
 		return errors.New("老师编号不能为空")
@@ -45,6 +51,8 @@ func TeacherRegister(t *models.TeachersRegisterReq) error {
 	}
 
 	Teacher := models.Teachers{
+		College:     t.College,
+		Major:       t.Major,
 		TeacherCard: t.TeacherCard,
 		Name:        t.Name,
 		Phone:       t.Phone,
@@ -84,6 +92,8 @@ func TeacherLogin(t *models.TeachersLoginReq) (models.TeachersLoginResp, error) 
 	loginResp.Token = token
 	loginResp.Teacher = models.Teachers{
 		Id:          teacherInfo.Id,
+		College:     teacherInfo.College,
+		Major:       teacherInfo.Major,
 		TeacherCard: teacherInfo.TeacherCard,
 		Name:        teacherInfo.Name,
 		Phone:       teacherInfo.Phone,

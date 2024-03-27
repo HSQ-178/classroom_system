@@ -30,6 +30,18 @@ func InitRouter() *gin.Engine {
 		{
 			student.POST("/getAllStudents", controllers.GetAllStudents) //获取该老师所有学生
 		}
+
+		//课程
+		course := root.Group("/course")
+		{
+			course.POST("/getAllCourse", controllers.GerAllCourse) //获取该老师的所有课程
+		}
+
+		//记录
+		record := root.Group("/record")
+		{
+			record.POST("/getNotSignInList", controllers.GetNotSignInList) //获取未签到学生列表
+		}
 	}
 
 	return r

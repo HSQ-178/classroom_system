@@ -13,22 +13,17 @@ func GetStudent(s *models.StudentReq) (models.StudentListResp, error) {
 
 	//根据教师编号查询所有学生
 	db := database.GetMysql().Table("students s").
-		Select("s.grade, s.college, s.major, s.class, s.student_card, s.name").
-		Joins("JOIN majors m ON s.major = m.major").
-		Joins("JOIN courses c ON m.id = c.major_id").
-		Joins("JOIN teachers t ON c.teacher_card = t.teacher_card")
-	//Distinct().
-	//Find(&studentList.Response).Error
+		Joins("JOIN courses c ON s.major = c.major")
 
 	if s.Id != 0 {
 		db.Where("s.id = ?", s.Id)
 	}
 
 	if s.TeacherCard != "" {
-		db.Where("t.teacher_card = ?", s.TeacherCard)
+		db.Where("c.teacher_card = ?", s.TeacherCard)
 	}
 
-	if s.Grade != 0 {
+	if s.Grade != "" {
 		db.Where("s.grade = ?", s.Grade)
 	}
 
@@ -52,20 +47,25 @@ func GetStudent(s *models.StudentReq) (models.StudentListResp, error) {
 		db.Where("s.name Like ?", "%"+s.Name+"%")
 	}
 
-	err := db.Distinct("student_card").Count(&studentList.TotalCount).Error
+	// 计算去重后的数据总数
+	var totalCount int64
+	err := db.Model(&models.Student{}).Distinct("s.id").Count(&totalCount).Error
 	if err != nil {
 		return studentList, errors.New("查询总数失败")
 	}
+	studentList.TotalCount = totalCount
 
 	if s.Pagination.Page > 0 && s.Pagination.PageSize > 0 {
 		db.Scopes(utils.Paginate(&s.Pagination))
 	}
 
-	err = db.Distinct("student_card").First(&studentList.Response).Error
+	err = db.Select("s.id, s.grade, s.college, s.major, s.class, s.student_card, s.name").Distinct().Find(&studentList.Response).Error
 
 	if err != nil {
 		return studentList, errors.New("查询失败")
 	}
+
+	studentList.TotalSize = len(studentList.Response)
 
 	return studentList, nil
 }

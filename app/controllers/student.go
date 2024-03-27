@@ -19,7 +19,7 @@ func GetAllStudents(c *gin.Context) {
 
 	studentList, err := StudentService.GetStudent(&Students)
 	if err != nil {
-		c.JSON(200, Result.Fail(err.Error()))
+		c.JSON(400, Result.Fail(err.Error()))
 		return
 	}
 

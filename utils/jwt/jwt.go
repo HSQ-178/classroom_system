@@ -8,7 +8,7 @@ import (
 var jwtSecret = []byte("classroom_system") //jwt密钥
 
 type Claims struct {
-	Id          int64  `json:"id"`
+	Id          int    `json:"id"`
 	TeacherCard string `json:"teacherCard"`
 	Password    string `json:"password"`
 	jwt.StandardClaims
@@ -18,7 +18,7 @@ type Claims struct {
 const ExpiredTime = time.Hour * 2
 
 // 生成token
-func GenerateToken(id int64, teacherCard string, password string) (string, error) {
+func GenerateToken(id int, teacherCard string, password string) (string, error) {
 	nowTime := time.Now()
 	claims := Claims{
 		id,

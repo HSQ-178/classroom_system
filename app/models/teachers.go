@@ -2,7 +2,9 @@ package models
 
 // Teachers 老师模型
 type Teachers struct {
-	Id          int64  `json:"id" gorm:"primaryKey;autoIncrement"`
+	Id          int    `json:"id" gorm:"primaryKey;autoIncrement"`
+	College     string `json:"college"`
+	Major       string `json:"major"`
 	TeacherCard string `form:"teacherCard" json:"teacherCard"`
 	Name        string `json:"name"`
 	Phone       string `json:"phone" gorm:"default: null"`
@@ -11,6 +13,9 @@ type Teachers struct {
 
 // TeachersRegisterReq  老师注册请求参数
 type TeachersRegisterReq struct {
+	Id          int    `json:"-"`
+	College     string `json:"college"`
+	Major       string `json:"major"`
 	TeacherCard string `json:"teacherCard"`
 	Name        string `json:"name"`
 	Phone       string `json:"phone"`
