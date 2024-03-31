@@ -11,7 +11,7 @@ type Record struct {
 	TeacherCard string    `json:"teacherCard"`
 	CourseId    int       `json:"courseId"`
 	StudentCard string    `json:"studentCard"`
-	StudentName string    `json:"studentName"`
+	StudentName string    `json:"name"`
 	CreateTime  time.Time `json:"createTime"`
 	UpdateTime  time.Time `json:"updateTime" gorm:"autoUpdateTime"`
 	status      int       `json:"status"`
@@ -27,7 +27,7 @@ type RecordReq struct {
 	Class       string `json:"class"`       //班级
 	CourseId    int    `json:"courseId"`    //课程ID
 	StudentCard string `json:"studentCard"` //学生编号
-	StudentName string `json:"studentName"` //学生姓名
+	StudentName string `json:"name"`        //学生姓名
 	CreateTime  string `json:"createTime"`  //创建时间
 	Status      int    `json:"status"`      //状态  1：签到  2：缺勤  3：请假
 
@@ -44,21 +44,19 @@ type RecordResp struct {
 	Class       string    `json:"class"`       //班级
 	CourseId    int       `json:"courseId"`    //课程ID
 	StudentCard string    `json:"studentCard"` //学生编号
-	StudentName string    `json:"studentName"` //学生姓名
+	StudentName string    `json:"name"`        //学生姓名
 	CreateTime  time.Time `json:"createTime"`  //创建时间
 	Status      int       `json:"status"`      //状态  1：签到  2：缺勤  3：请假
 }
 
-// RecordRespList 记录响应列表
-type RecordRespList struct {
+// RecordRespList 记录签到或缺勤响应列表
+type RecordSignInRespList struct {
 	RecordResp []RecordResp `json:"recordResp"` //记录列表
 	TotalCount int64        `json:"totalCount"` //总记录数
-	TotalSize  int          `json:"totalSize"`  //每页数据
 }
 
 // NotSignInResp 未签到学生响应列表
 type NotSignInResp struct {
 	StudentList []Student `json:"studentList"` //学生列表
 	TotalCount  int64     `json:"totalCount"`  //总记录数
-	TotalSize   int       `json:"totalSize"`   //每页数据
 }

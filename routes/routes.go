@@ -40,7 +40,8 @@ func InitRouter() *gin.Engine {
 		//记录
 		record := root.Group("/record")
 		{
-			record.POST("/getNotSignInList", controllers.GetNotSignInList) //获取未签到学生列表
+			record.POST("/getNotSignInList", controllers.GetNotSignInList)               //获取未签到学生列表
+			record.POST("/getSignInAndAbsenceList", controllers.GetSignInAndAbsenceList) //获取签到与缺勤
 		}
 	}
 

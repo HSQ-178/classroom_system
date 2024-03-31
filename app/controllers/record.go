@@ -13,16 +13,35 @@ func GetNotSignInList(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&notSignInReq)
 	if err != nil {
-		c.JSON(400, Result.Fail(err.Error()))
+		c.JSON(200, Result.Fail(err.Error()))
 		return
 	}
 
 	notSignInList, err := RecordService.GetNotSignInStudentList(&notSignInReq)
 	if err != nil {
-		c.JSON(400, Result.Fail(err.Error()))
+		c.JSON(200, Result.Fail(err.Error()))
 		return
 	}
 
 	c.JSON(200, Result.Success(notSignInList))
 
+}
+
+// GetSignInAndAbsenceList 获取签到与缺勤
+func GetSignInAndAbsenceList(c *gin.Context) {
+	var signInAndAbsenceReq models.RecordReq
+
+	err := c.ShouldBindJSON(&signInAndAbsenceReq)
+	if err != nil {
+		c.JSON(200, Result.Fail(err.Error()))
+		return
+	}
+
+	signInAndAbsenceList, err := RecordService.GetSignInAndAbsence(&signInAndAbsenceReq)
+	if err != nil {
+		c.JSON(200, Result.Fail(err.Error()))
+		return
+	}
+
+	c.JSON(200, Result.Success(signInAndAbsenceList))
 }

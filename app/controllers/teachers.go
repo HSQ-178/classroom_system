@@ -13,13 +13,13 @@ func Register(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&registerReq) //将请求中的 JSON 数据绑定到 registerReq 结构体中
 	if err != nil {
-		c.JSON(400, Result.Fail("参数错误"))
+		c.JSON(200, Result.Fail("参数错误"))
 		return
 	}
 
 	err = teacherService.TeacherRegister(&registerReq)
 	if err != nil {
-		c.JSON(400, Result.Fail(err.Error()))
+		c.JSON(200, Result.Fail(err.Error()))
 		return
 	}
 
@@ -33,14 +33,14 @@ func Login(c *gin.Context) {
 	//参数校验
 	err := c.ShouldBindJSON(&loginReq)
 	if err != nil {
-		c.JSON(400, Result.Fail("参数错误"))
+		c.JSON(200, Result.Fail("参数错误"))
 		return
 	}
 
 	//登录
 	teacherInfo, err := teacherService.TeacherLogin(&loginReq)
 	if err != nil {
-		c.JSON(400, Result.Fail(err.Error()))
+		c.JSON(200, Result.Fail(err.Error()))
 		return
 	}
 

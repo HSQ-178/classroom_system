@@ -13,13 +13,13 @@ func GerAllCourse(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&courseReq)
 	if err != nil {
-		c.JSON(400, Result.Fail("参数错误"))
+		c.JSON(200, Result.Fail("参数错误"))
 		return
 	}
 
 	courseList, err := CourseService.GetAllCourse(&courseReq)
 	if err != nil {
-		c.JSON(400, Result.Fail(err.Error()))
+		c.JSON(200, Result.Fail(err.Error()))
 		return
 	}
 

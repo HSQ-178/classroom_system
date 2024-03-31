@@ -13,13 +13,13 @@ func GetAllStudents(c *gin.Context) {
 	// 将接口值转换为字符串类型
 	err := c.ShouldBindJSON(&Students)
 	if err != nil {
-		c.JSON(400, Result.Fail("参数错误"))
+		c.JSON(200, Result.Fail("参数错误"))
 		return
 	}
 
 	studentList, err := StudentService.GetStudent(&Students)
 	if err != nil {
-		c.JSON(400, Result.Fail(err.Error()))
+		c.JSON(200, Result.Fail(err.Error()))
 		return
 	}
 
