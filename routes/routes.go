@@ -7,6 +7,7 @@ import (
 )
 
 func InitRouter() *gin.Engine {
+	//将日志写入文件和控制台
 	// 初始化一个http服务对象
 	r := gin.Default()
 
@@ -42,6 +43,22 @@ func InitRouter() *gin.Engine {
 		{
 			record.POST("/getNotSignInList", controllers.GetNotSignInList)               //获取未签到学生列表
 			record.POST("/getSignInAndAbsenceList", controllers.GetSignInAndAbsenceList) //获取签到与缺勤
+			record.POST("/addRecords", controllers.AddRecords)                           //添加签到或缺勤记录
+			record.POST("/deleteRecords", controllers.DeleteRecords)                     //删除签到或缺勤记录
+			record.POST("/updateRecords", controllers.UpdateRecords)                     //更新签到或缺勤记录
+		}
+
+		//redis
+		redis := root.Group("/redis")
+		{
+			redis.POST("/setRedis", controllers.SetNoticeRedis) //存入redis
+			redis.POST("/getRedis", controllers.GetNoticeRedis) //获取redis
+		}
+
+		qrcode := root.Group("/qrcode")
+		{
+			qrcode.POST("/setQrcode", controllers.SetQrcode) //将二维码存入redis
+			qrcode.GET("/getQrcode", controllers.GetQrcode)  //获取二维码
 		}
 	}
 

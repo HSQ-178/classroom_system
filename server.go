@@ -8,7 +8,10 @@ import (
 func main() {
 	database.InitMysql() //初始化MYSQL数据库
 
+	database.InitClient() // 初始化Redis数据库
+
 	router := routes.InitRouter() // 初始化路由
 
-	_ = router.Run(":8081")
+	_ = router.Run(":8082")
+
 }
