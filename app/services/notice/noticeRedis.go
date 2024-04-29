@@ -2,6 +2,7 @@ package notice
 
 import (
 	"classroom-system/database"
+	"context"
 	"errors"
 	"fmt"
 	"time"
@@ -57,12 +58,12 @@ func SetNoticeRedis(n *Notice) (string, error) {
 	}
 
 	//判断是否已存在key
-	value := redisClient.Get(key).Val()
+	value := redisClient.Get(context.Background(), key).Val()
 	if value != "" {
 		return "", errors.New("该key已存在")
 	}
 
-	err = redisClient.Set(key, "127.0.0.1", duration).Err()
+	err = redisClient.Set(context.Background(), key, "127.0.0.1", duration).Err()
 	if err != nil {
 		fmt.Printf(err.Error())
 		return "", errors.New("存入redis失败")
@@ -71,7 +72,7 @@ func SetNoticeRedis(n *Notice) (string, error) {
 }
 
 func GetNoticeRedis(key string) (string, error) {
-	value := database.GetRedis().Get(key).Val()
+	value := database.GetRedis().Get(context.Background(), key).Val()
 	if value == "" {
 		return "", errors.New("该key不存在")
 	}

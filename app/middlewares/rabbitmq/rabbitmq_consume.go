@@ -1,7 +1,8 @@
 package rabbitmq
 
 import (
-	"classroom-system/app/services/qrcode"
+	"classroom-system/app/middlewares/rabbitmq/handler"
+	"encoding/json"
 	"fmt"
 )
 
@@ -37,9 +38,16 @@ func (r *RabbitMQ) Consume() {
 	forever := make(chan bool)
 	go func() {
 		for d := range msgs {
-			//实现我们要处理的逻辑函数
-			go qrcode.GenerateQrcode(r.QueueName)
-			fmt.Printf("Received a message: %s", d.Body)
+			var message Message
+			err := json.Unmarshal(d.Body, &message)
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			switch message.Type {
+			case "qrcode":
+				go handler.GenerateOrUpdateRedis(message.Body)
+			}
 
 			d.Ack(false)
 		}

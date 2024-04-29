@@ -26,7 +26,7 @@ func InitMysql() {
 		},
 	)
 
-	dsn := "root:08181029hsq@tcp(localhost:3306)/classroom_system?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:123456@tcp(localhost:3306)/classroom_system?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: newLogger,
 	})

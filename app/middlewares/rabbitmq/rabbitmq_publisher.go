@@ -1,7 +1,6 @@
 package rabbitmq
 
 import (
-	"classroom-system/app/services/qrcode"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -9,8 +8,8 @@ import (
 	"log"
 )
 
-func (r *RabbitMQ) Publish(qrcodeInfo *qrcode.QrcodeInfo) {
-	qrcodeInfoBytes, err := json.Marshal(qrcodeInfo)
+func (r *RabbitMQ) Publish(message Message) {
+	qrcodeInfoBytes, err := json.Marshal(message)
 	if err != nil {
 		log.Println("Error marshalling QrcodeInfo to bytes:", err)
 		return

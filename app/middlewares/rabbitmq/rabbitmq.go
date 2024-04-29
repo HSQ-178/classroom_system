@@ -2,6 +2,7 @@ package rabbitmq
 
 import (
 	"fmt"
+
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
@@ -14,6 +15,11 @@ type RabbitMQ struct {
 	Mqurl        string           // 连接信息
 }
 
+type Message struct {
+	Type string `json:"type"`
+	Body []byte `json:"body"`
+}
+
 func RabbitMQConn(exchangeName, queueName, routeKey string) *RabbitMQ {
 	var err error
 
@@ -21,7 +27,7 @@ func RabbitMQConn(exchangeName, queueName, routeKey string) *RabbitMQ {
 		ExchangeName: exchangeName,
 		QueueName:    queueName,
 		RouteKey:     routeKey,
-		Mqurl:        "amqp://root:08181029hsq@localhost:5672/",
+		Mqurl:        "amqp://root:fang1215@localhost:5672/",
 	}
 
 	// 1. 建立连接

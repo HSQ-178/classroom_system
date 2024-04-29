@@ -60,7 +60,6 @@ func InitRouter() *gin.Engine {
 		{
 			qrcode.POST("/setQrcode", controllers.SetQrcode) //将二维码存入redis
 			qrcode.GET("/getQrcode", controllers.GetQrcode)  //获取二维码
-			qrcode.POST("/rabbitmqQrcode", controllers.RabbitmqQrcode)
 		}
 	}
 
