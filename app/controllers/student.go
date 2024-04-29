@@ -25,3 +25,21 @@ func GetAllStudents(c *gin.Context) {
 
 	c.JSON(200, Result.Success(studentList))
 }
+
+func LoginStudent(c *gin.Context) {
+	var studentReq models.StudentReq
+
+	err := c.ShouldBindJSON(&studentReq)
+	if err != nil {
+		c.JSON(200, Result.Fail("参数错误"))
+		return
+	}
+
+	student, err := StudentService.LoginStudent(&studentReq)
+	if err != nil {
+		c.JSON(200, Result.Fail(err.Error()))
+		return
+	}
+
+	c.JSON(200, Result.Success(student))
+}

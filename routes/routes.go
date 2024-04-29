@@ -30,6 +30,7 @@ func InitRouter() *gin.Engine {
 		student := root.Group("/student")
 		{
 			student.POST("/getAllStudents", controllers.GetAllStudents) //获取该老师所有学生
+			student.POST("/login", controllers.LoginStudent)            //学生端登录
 		}
 
 		//课程
@@ -59,6 +60,7 @@ func InitRouter() *gin.Engine {
 		{
 			qrcode.POST("/setQrcode", controllers.SetQrcode) //将二维码存入redis
 			qrcode.GET("/getQrcode", controllers.GetQrcode)  //获取二维码
+			qrcode.POST("/rabbitmqQrcode", controllers.RabbitmqQrcode)
 		}
 	}
 

@@ -69,3 +69,36 @@ func GetStudent(s *models.StudentReq) (models.StudentListResp, error) {
 
 	return studentList, nil
 }
+
+// 学生端登录
+func LoginStudent(s *models.StudentReq) (models.StudentResp, error) {
+	var student models.StudentResp
+
+	db := database.GetMysql().Table("students")
+
+	if s.Grade != "" {
+		db = db.Where("grade = ?", s.Grade)
+	}
+	if s.College != "" {
+		db = db.Where("college = ?", s.College)
+	}
+	if s.Major != "" {
+		db = db.Where("major = ?", s.Major)
+	}
+	if s.Class != "" {
+		db = db.Where("class like ?", "%"+s.Class+"%")
+	}
+	if s.StudentCard != "" {
+		db = db.Where("student_card = ?", s.StudentCard)
+	}
+	if s.Name != "" {
+		db = db.Where("name = ?", s.Name)
+	}
+
+	err := db.Find(&student).Error
+	if err != nil {
+		return student, errors.New("查询失败")
+	}
+	return student, nil
+
+}

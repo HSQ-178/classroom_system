@@ -11,9 +11,9 @@ func GetAllCourse(c *models.CourseReq) (models.CourseListResp, error) {
 	var courseList models.CourseListResp
 	var err error
 
-	if c.TeacherCard == "" {
-		return courseList, errors.New("老师编号不能为空")
-	}
+	//if c.TeacherCard == "" {
+	//	return courseList, errors.New("老师编号不能为空")
+	//}
 
 	db := database.GetMysql().Table("courses")
 

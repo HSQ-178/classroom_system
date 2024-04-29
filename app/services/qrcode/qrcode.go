@@ -1,6 +1,7 @@
 package qrcode
 
 import (
+	Rabbitmq "classroom-system/app/middlewares/rabbitmq"
 	"classroom-system/database"
 	"encoding/base64"
 	"encoding/json"
@@ -22,9 +23,15 @@ type QrcodeInfo struct {
 	QrcodeExpireAt  int64  `json:"qrcodeExpireAt"`  //二维码过期时间
 }
 
+//var qrcodeInfoTask map[string]*QrcodeInfo
+
 // 将二维码内容存入redis
 func SetRedisQrcode(qrcodeInfo *QrcodeInfo) (string, error) {
 	var err error
+
+	//将消息加入消息队列
+	mq := Rabbitmq.RabbitMQConn("", qrcodeInfo.TeacherCard, "")
+	mq.Publish(qrcodeInfo)
 
 	key := qrcodeInfo.TeacherCard
 	duration := time.Duration(qrcodeInfo.QrcodeDuration) * time.Second * 60
@@ -88,22 +95,20 @@ func GenerateQrcode(key string) ([]byte, error) {
 	qrcodeTask = qrcodeData
 
 	// 启动定时器，定时更新二维码内容并生成新的二维码
-	go func() {
-		ticker := time.Tick(time.Duration(qrcodeInfo.QrcodeFrequency) * time.Second)
-
-		for range ticker {
-			// 生成二维码内容字符串
-			qrcodeContent := GenerateNewQRCodeContent(qrcodeInfo)
-
-			//生成二维码
-			qrcodeData, err := qrcode.Encode(qrcodeContent, qrcode.Medium, 256)
-			if err != nil {
-				fmt.Printf(err.Error())
-				continue
-			}
-			qrcodeTask = qrcodeData
-		}
-	}()
+	//ticker := time.Tick(time.Duration(qrcodeInfo.QrcodeFrequency) * time.Second)
+	//
+	//for range ticker {
+	//	// 生成二维码内容字符串
+	//	qrcodeContent := GenerateNewQRCodeContent(qrcodeInfo)
+	//
+	//	//生成二维码
+	//	qrcodeData, err := qrcode.Encode(qrcodeContent, qrcode.Medium, 256)
+	//	if err != nil {
+	//		fmt.Printf(err.Error())
+	//		continue
+	//	}
+	//	qrcodeTask = qrcodeData
+	//}
 
 	return qrcodeTask, nil
 
@@ -115,7 +120,7 @@ func GenerateNewQRCodeContent(qrcodeInfo QrcodeInfo) string {
 	qrcodeInfo.QrcodeExpireAt = time.Now().Unix() + int64(qrcodeInfo.QrcodeDuration*60)
 
 	// 生成二维码内容字符串
-	qrcodeContent := fmt.Sprintf("%v,%v,%v,%v,%v,%v,%v,%v,%v,%v",
+	qrcodeContent := fmt.Sprintf("%v,%v,%v,%v,%v,%v,%v,%v",
 		qrcodeInfo.TeacherCard, qrcodeInfo.College, qrcodeInfo.Major,
 		qrcodeInfo.Grade, qrcodeInfo.CourseId, qrcodeInfo.QrcodeDuration, qrcodeInfo.QrcodeFrequency,
 		qrcodeInfo.QrcodeExpireAt, time.Now())

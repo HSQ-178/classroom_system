@@ -37,3 +37,20 @@ func GetQrcode(c *gin.Context) {
 	// 返回二维码图像
 	c.Data(http.StatusOK, "image/png", value)
 }
+
+func RabbitmqQrcode(c *gin.Context) {
+	var qrcodeInfo Service.QrcodeInfo
+
+	err := c.ShouldBindJSON(&qrcodeInfo)
+	if err != nil {
+		c.JSON(200, Result.Fail("参数错误"))
+		return
+	}
+	qrcodeInfoRedis, err := Service.SetRedisQrcode(&qrcodeInfo)
+	if err != nil {
+		c.JSON(200, Result.Fail(err.Error()))
+		return
+	}
+	c.JSON(200, Result.Success(qrcodeInfoRedis))
+
+}
