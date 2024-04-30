@@ -19,12 +19,12 @@ func SetQrcode(c *gin.Context) {
 		c.JSON(200, Result.Fail("参数错误"))
 		return
 	}
-	err = Service.SetRedisQrcode(&qrcodeInfo)
+	expireAt, err := Service.SetRedisQrcode(&qrcodeInfo)
 	if err != nil {
 		c.JSON(200, Result.Fail(err.Error()))
 		return
 	}
-	c.JSON(200, Result.Success("发布成功"))
+	c.JSON(200, Result.Success(expireAt))
 }
 
 // 生成二维码图像

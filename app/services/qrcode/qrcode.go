@@ -9,10 +9,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/skip2/go-qrcode"
+	"time"
 )
 
 // 将二维码内容存入redis
-func SetRedisQrcode(qrcodeInfo *models.QrcodeInfo) error {
+func SetRedisQrcode(qrcodeInfo *models.QrcodeInfo) (time.Time, error) {
 	var err error
 
 	//将消息加入消息队列
@@ -24,7 +25,8 @@ func SetRedisQrcode(qrcodeInfo *models.QrcodeInfo) error {
 		Body: qrcodeInfoBytes,
 	})
 
-	return err
+	expireAt := time.Now().Add(time.Duration(qrcodeInfo.QrcodeDuration) * time.Minute)
+	return expireAt, err
 }
 
 func GenerateQrcodeByKey(key string) ([]byte, error) {

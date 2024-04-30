@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/redis/go-redis/v9"
 	"time"
 )
 
@@ -60,7 +61,9 @@ func GenerateOrUpdateRedis(messageBody []byte) {
 			qrcodeInfo.Content = string(signByQrcodeInfoBytes)
 			qrcodeInfoBytes, _ := json.Marshal(qrcodeInfo)
 
-			database.GetRedis().GetSet(context.Background(), signByQrcodeInfo.TeacherCard, qrcodeInfoBytes)
+			//只更新内容，保持过期时间
+			database.GetRedis().Set(context.Background(), signByQrcodeInfo.TeacherCard, qrcodeInfoBytes, redis.KeepTTL)
+			fmt.Println(qrcodeInfoBytes)
 		} else {
 			break
 		}
