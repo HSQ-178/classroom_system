@@ -11,11 +11,36 @@
  Target Server Version : 80033
  File Encoding         : 65001
 
- Date: 29/04/2024 20:38:27
+ Date: 08/05/2024 10:56:22
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for authcodes
+-- ----------------------------
+DROP TABLE IF EXISTS `authcodes`;
+CREATE TABLE `authcodes`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `teacher_card` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `grade` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `college` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `major` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `class` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `course_id` int(0) NULL DEFAULT NULL,
+  `authcode` int(0) NULL DEFAULT NULL,
+  `create_time` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of authcodes
+-- ----------------------------
+INSERT INTO `authcodes` VALUES (1, 'gdxz003', '22', '计算机学院', '软件技术', '4班', 1, 15693, '2024-05-07 19:50:09');
+INSERT INTO `authcodes` VALUES (2, 'gdxz003', '22', '计算机学院', '软件技术', '4班', 7, 52621, '2024-05-07 20:16:23');
+INSERT INTO `authcodes` VALUES (3, 'gdxz003', '22', '计算机学院', '软件技术', '4班', 7, 38452, '2024-05-08 09:56:27');
+INSERT INTO `authcodes` VALUES (4, 'gdxz003', '22', '计算机学院', '软件技术', '4班', 4, 90028, '2024-05-08 09:58:17');
 
 -- ----------------------------
 -- Table structure for classes
@@ -77,7 +102,7 @@ CREATE TABLE `courses`  (
   `end_time` datetime(0) NULL DEFAULT NULL,
   `classroom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of courses
@@ -160,10 +185,13 @@ INSERT INTO `records` VALUES ('4702d712-f59a-11ee-bda9-f66add776e2d', 'gdxz003',
 INSERT INTO `records` VALUES ('58d7f0ea-f6d4-11ee-8bdf-f66add776e2d', 'gdxz003', '22', '计算机学院', '软件技术', '4班', 4, '22203020401', '陈广明', '2024-04-10 08:10:00', '2024-04-10 08:50:38', 1);
 INSERT INTO `records` VALUES ('5991a452-f6d4-11ee-8bdf-f66add776e2d', 'gdxz003', '22', '计算机学院', '软件技术', '4班', 4, '22203020403', '陈鑫', '2024-04-10 08:10:00', '2024-04-10 08:50:39', 2);
 INSERT INTO `records` VALUES ('5a3ec573-f6d4-11ee-8bdf-f66add776e2d', 'gdxz003', '22', '计算机学院', '软件技术', '4班', 4, '22203020405', '戴苑莹', '2024-04-10 08:10:00', '2024-04-10 08:50:40', 1);
+INSERT INTO `records` VALUES ('7d0da1dd-0895-11ef-9631-00155d70a558', '', '22', '计算机学院', '软件技术', '4班', 5, '22203020410', '黄爽清', '2024-05-02 08:10:00', '2024-05-02 23:06:01', 1);
+INSERT INTO `records` VALUES ('92109322-09ec-11ef-a4b8-f66add776e2d', '', '22', '计算机学院', '软件技术', '4班', 6, '22203020410', '黄爽清', '2024-05-04 08:10:00', '2024-05-04 16:01:54', 1);
 INSERT INTO `records` VALUES ('b301e1a4-fb3f-11ee-84b7-f66add776e2d', 'gdxz003', '22', '计算机学院', '软件技术', '4班', 3, '22203020401', '陈广明', '2024-04-15 08:00:00', '2024-04-15 23:49:10', 1);
 INSERT INTO `records` VALUES ('b3bada16-fb3f-11ee-84b7-f66add776e2d', 'gdxz003', '22', '计算机学院', '软件技术', '4班', 3, '22203020403', '陈鑫', '2024-04-15 08:00:00', '2024-04-15 23:49:11', 1);
 INSERT INTO `records` VALUES ('b471199e-fb3f-11ee-84b7-f66add776e2d', 'gdxz003', '22', '计算机学院', '软件技术', '4班', 3, '22203020405', '戴苑莹', '2024-04-15 08:00:00', '2024-04-15 23:49:12', 1);
 INSERT INTO `records` VALUES ('b5d92f2a-fb3f-11ee-84b7-f66add776e2d', 'gdxz003', '22', '计算机学院', '软件技术', '4班', 3, '22203020410', '黄爽清', '2024-04-15 08:00:00', '2024-04-15 23:49:15', 1);
+INSERT INTO `records` VALUES ('b5fe032b-0ce5-11ef-aa41-00155dea43e0', 'gdxz003', '22', '计算机学院', '软件技术', '4班', 4, '22203020410', '黄爽清', '2024-05-08 08:10:00', '2024-05-08 10:50:21', 1);
 
 -- ----------------------------
 -- Table structure for students
@@ -180,7 +208,7 @@ CREATE TABLE `students`  (
   `status` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_name`(`student_card`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 86 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 87 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of students
@@ -286,7 +314,7 @@ CREATE TABLE `teachers`  (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `status` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of teachers

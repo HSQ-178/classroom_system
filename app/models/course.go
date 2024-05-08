@@ -45,6 +45,8 @@ type CourseResp struct {
 	StartTime time.Time `json:"startTime"`
 	EndTime   time.Time `json:"endTime"`
 	Classroom string    `json:"classroom"`
+
+	TeacherCard string `json:"teacherCard"`
 }
 
 // CourseList 课程列表响应模型

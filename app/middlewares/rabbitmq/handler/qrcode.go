@@ -63,7 +63,6 @@ func GenerateOrUpdateRedis(messageBody []byte) {
 
 			//只更新内容，保持过期时间
 			database.GetRedis().Set(context.Background(), signByQrcodeInfo.TeacherCard, qrcodeInfoBytes, redis.KeepTTL)
-			fmt.Println(qrcodeInfoBytes)
 		} else {
 			break
 		}
