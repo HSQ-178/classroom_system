@@ -27,7 +27,7 @@ func RabbitMQConn(exchangeName, queueName, routeKey string) *RabbitMQ {
 		ExchangeName: exchangeName,
 		QueueName:    queueName,
 		RouteKey:     routeKey,
-		Mqurl:        "amqp://root:08181029hsq@localhost:5672/",
+		Mqurl:        "amqp://root:fang1215@localhost:5672/",
 	}
 
 	// 1. 建立连接

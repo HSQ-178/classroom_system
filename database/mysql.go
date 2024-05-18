@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 	"log"
 	"os"
 	"time"
@@ -26,9 +27,12 @@ func InitMysql() {
 		},
 	)
 
-	dsn := "root:08181029hsq@tcp(localhost:3306)/classroom_system?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:123456@tcp(localhost:3306)/classroom_system?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: newLogger,
+		NamingStrategy: schema.NamingStrategy{
+			SingularTable: true,
+		},
 	})
 	if err != nil {
 		fmt.Printf("数据库连接失败,err: %v\n", err)

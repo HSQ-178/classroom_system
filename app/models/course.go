@@ -54,3 +54,7 @@ type CourseListResp struct {
 	TotalCount int64        `json:"totalCount"`          //课程总数
 	CourseResp []CourseResp `json:"courseResp" gorm:"-"` //课程列表
 }
+
+func (CourseResp) TableName() string {
+	return "courses"
+}

@@ -322,3 +322,51 @@ CREATE TABLE `teachers`  (
 INSERT INTO `teachers` VALUES (8, '计算机学院', '软件技术', 'gdxz003', '黄爽清', '15767966159', '0784960d7a1f2bba9c3db3276def80f2', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+DROP TABLE IF EXISTS `homework_task`;
+CREATE TABLE `homework_task`(
+    `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `teacher_card` varchar(255) NOT NULL COMMENT '教师工号',
+    `course_id` int(0) NOT NULL COMMENT '课程ID',
+    `title` varchar(255) NOT NULL COMMENT '作业标题',
+    `subscribe` text NOT NULL COMMENT '作业内容',
+    `started_at` datetime(0) NOT NULL COMMENT '开始时间',
+    `ended_at` datetime(0) NOT NULL COMMENT '结束时间',
+    `created_at` datetime(0) NOT NULL COMMENT '创建时间',
+    `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+    `status` int(0) NOT NULL DEFAULT 1 COMMENT '状态',
+    PRIMARY KEY (`id`),
+    INDEX `index_teacher_card`(`teacher_card`),
+    INDEX `index_course_id`(`course_id`),
+    INDEX `index_status`(`status`)
+);
+
+DROP TABLE IF EXISTS `homework_records`;
+CREATE TABLE `homework_records`(
+    `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `homework_id` int(0) NOT NULL COMMENT '作业ID',
+    `student_card` varchar(255) NOT NULL COMMENT '学生学号',
+    `created_at` datetime(0) NOT NULL COMMENT '创建时间',
+    `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+    `status` int(0) NOT NULL DEFAULT 1 COMMENT '状态',
+    PRIMARY KEY (`id`),
+    INDEX `index_homework_id`(`homework_id`),
+    INDEX `index_student_card`(`student_card`),
+    INDEX `index_status`(`status`)
+);
+
+DROP TABLE IF EXISTS `homework_files`;
+CREATE TABLE `homework_files`(
+     `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+     `type` int(0) NOT NULL COMMENT '附件类型 1:作业任务 2:作业记录',
+     `bind_id` int(0) NOT NULL COMMENT '绑定ID 作业任务ID或作业记录ID',
+     `user_id` varchar(255) NOT NULL COMMENT '用户Id teacherCard or studentCard',
+     `filename` varchar(255) NOT NULL COMMENT '文件名',
+     `created_at` datetime(0) NOT NULL COMMENT '创建时间',
+     `updated_at` datetime(0) NOT NULL COMMENT '更新时间',
+     `status` int(0) NOT NULL DEFAULT 1 COMMENT '状态',
+     PRIMARY KEY (`id`),
+     INDEX `index_type`(`type`),
+     INDEX `index_bind_id`(`bind_id`),
+     INDEX `index_status`(`status`)
+);

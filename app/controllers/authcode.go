@@ -30,6 +30,7 @@ func GetAuthcode(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&authcodeReq)
 	if err != nil {
+		fmt.Println(err.Error())
 		c.JSON(200, Result.Fail("参数错误"))
 	}
 

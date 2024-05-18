@@ -67,6 +67,23 @@ func InitRouter() *gin.Engine {
 			authcode.POST("/addAuthcode", controllers.AddAuthcode) //添加签到码
 			authcode.POST("/getAuthcode", controllers.GetAuthcode) //查找签到码
 		}
+
+		homeworkTask := root.Group("/homeworkTask")
+		{
+			homeworkTask.POST("/create", controllers.CreateHomeworkTask) //创建作业任务
+			homeworkTask.POST("/list", controllers.ListHomeworkTask)     //获取作业任务列表
+		}
+
+		homeworkFile := root.Group("/homeworkFiles")
+		{
+			homeworkFile.POST("/create", controllers.CreateHomeworkFile) //创建作业文件
+		}
+
+		file := root.Group("/file")
+		{
+			file.POST("/upload", controllers.UploadFile)    //上传文件
+			file.GET("/download", controllers.DownloadFile) //下载文件
+		}
 	}
 
 	return r

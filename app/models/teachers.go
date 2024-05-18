@@ -11,6 +11,15 @@ type Teachers struct {
 	Password    string `json:"password"`
 }
 
+type TeacherResp struct {
+	Id          int    `json:"id"`
+	College     string `json:"college"`
+	Major       string `json:"major"`
+	TeacherCard string `form:"teacherCard" json:"teacherCard"`
+	Name        string `json:"name"`
+	Phone       string `json:"phone" gorm:"default: null"`
+}
+
 // TeachersRegisterReq  老师注册请求参数
 type TeachersRegisterReq struct {
 	Id          int    `json:"-"`
@@ -32,4 +41,8 @@ type TeachersLoginReq struct {
 type TeachersLoginResp struct {
 	Token   string   `json:"token"`
 	Teacher Teachers `json:"teacher"`
+}
+
+func (TeacherResp) TableName() string {
+	return "teachers"
 }
